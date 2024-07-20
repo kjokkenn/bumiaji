@@ -60,6 +60,7 @@ class detailpanenmitra(models.Model) :
  
     def __str__(self) :
         return "{} - {}".format(self.idpanen_mitra,self.batch)
+    
 class panenlokal(models.Model) :
     idpanen_lokal = models.AutoField(primary_key=True)
     tanggal_panen = models.DateField()
@@ -92,7 +93,7 @@ class penjualan(models.Model) :
     tanggal = models.DateField()
 
     def __str__(self) :
-        return "{} - {}".format(self.idpanen_lokal,self.tanggal_panen)
+        return str(self.id_pasar)
 
 class detailpenjualan(models.Model):
     iddetail_penjualan = models.AutoField(primary_key=True)
@@ -136,4 +137,6 @@ class biaya(models.Model) :
     nama_biaya = models.CharField(max_length=100)
     nominal_biaya = models.PositiveIntegerField()
 
+    def __str__(self) :
+        return "{} - {}".format(self.idjenisbiaya,self.nama_biaya)
 
