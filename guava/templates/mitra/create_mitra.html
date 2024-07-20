@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Add Data</h1>
+    <a href="{% url 'read_mitra' %}"><button>Kembali</button></a>
+    <form action="" method="post">
+        {% csrf_token %}
+        <label for="nama_mitra">Nama Mitra</label>
+        <input type="text" name="nama_mitra" id="nama_mitra" required>
+
+        <label for="alamat_mitra">Alamat Mitra</label>
+        <input type="text" name="alamat_mitra" id="alamat_mitra" required>
+
+        <br>
+        <br>
+
+        <label for="nohp_mitra">Kontak Mitra</label>
+        <input type="number" name="nohp_mitra" id="nohp_mitra" >
+
+        <label for="tanggalawal_mitra">Tanggal Awal Bermitra</label>
+        <input type="date" name="tanggalawal_mitra" id="tanggalawal_mitra" required>
+        
+        <br>
+        <br>
+        
+        <label for="durasi_kontrak">Durasi Kontrak</label>
+        <input type="number" name="durasi_kontrak" id="durasi_kontrak" required>
+        
+        <label for="luas_lahan">Luas Lahan</label>
+        <input type="number" name="luas_lahan" id="luas_lahan" required>
+        
+        <br>
+        <br>
+
+        <label for="status_mitra">Status Mitra</label>
+        <select name="status_mitra" id="status_mitra" required>
+            <option value="Aktif">Aktif</option>
+            <option value="Tidak Aktif">Tidak Aktif</option>
+        </select>
+        
+        <br>
+        <br>
+
+        <button type="submit">Submit</button>
+    </form>
+    
+</body>
+</html>
