@@ -52,7 +52,7 @@ def create_mitra(request) :
                 statusmitra = True
             else :
                 statusmitra = False
-            newmitra = models.mitra(
+            models.mitra(
                 nama_mitra = namamitra,
                 alamat_mitra = alamatmitra,
                 nohp_mitra = nohpmitra,
@@ -60,9 +60,8 @@ def create_mitra(request) :
                 durasi_kontrak = durasikontrakmitra,
                 luas_lahan = luaslahan,
                 status_mitra = statusmitra
-            )
+            ).save()
 
-            newmitra.save()
             messages.success(request,"Data Mitra Berhasil Ditambahkan!")
         return redirect("read_mitra")
             
@@ -110,3 +109,95 @@ def delete_mitra(request,id) :
     getmitraobj.delete()
     messages.success(request, "Data berhasil dihapus!")
     return redirect('read_mitra')
+
+'''CRUD PENJUALAN'''
+def read_penjualan(request) : 
+    try :
+        penjualanobj = models.penjualan.objects.all()
+        return render(request,
+                        'penjualan/read_penjualan.html',
+                        {
+                            'penjualanobj' : penjualanobj
+                        })
+    except models.mitra.DoesNotExist :
+        messages.error(request,"Data Penjualan Tidak Ditemukan!")
+
+def create_penjualan(request) :
+    #Data yang harus diambil sebelum masuk ke 'get'/'post'
+    pasarobj = models.pasar.objects.all()
+    produkobj = models.produk.objects.all()
+    komoditasobj = models.komoditas.objects.all()
+    if request.method == 'GET' :
+        return render(request, 'penjualan/create_penjualan.html',{
+            'pasarobj' : pasarobj,
+            'produkobj' : produkobj,
+            'komoditasobj' : komoditasobj,
+        })
+    
+    else :
+        #Mengambil data yang ingin di 'post' dari input html
+        pasar = request.POST['pasar']
+        tanggal = request.POST['tanggal']
+        kuantitasp = request.POST['kuantitasp']
+        kuantitask = request.POST['kuantitask']
+        produk = request.POST['produk']
+        komoditas = request.POST['komoditas']
+
+        penjualan = models.penjualan(
+            id_pasar = models.pasar.objects.get(id_pasar = pasar),
+            tanggal = tanggal,
+        )
+        penjualan.save()
+
+        id = penjualan.id_penjualan
+
+        if komoditas != '' and produk != '' and kuantitasp != '' and kuantitask != '' :
+            models.detailpenjualan(
+                id_penjualan = models.penjualan.objects.get(id_penjualan = id),
+                id_produk = models.produk.objects.get(id_produk = produk),
+                id_komoditas = models.komoditas.objects.get(id_komoditas = komoditas),
+                kuantitas_produk = kuantitasp,
+                kuantitas_komoditas = kuantitask,
+            ).save()
+
+        elif komoditas != '' and produk == '' and kuantitasp == '' and kuantitask != '' :
+            models.detailpenjualan(
+                id_penjualan = models.penjualan.objects.get(id_penjualan = id),
+                id_produk = None,
+                id_komoditas = models.komoditas.objects.get(id_komoditas = komoditas),
+                kuantitas_produk = None,
+                kuantitas_komoditas = kuantitask,
+            ).save()
+        
+        elif komoditas == '' and produk != '' and kuantitasp != '' and kuantitask == '' :
+            models.detailpenjualan(
+                id_penjualan = models.penjualan.objects.get(id_penjualan = id),
+                id_produk = models.produk.objects.get(id_produk = produk),
+                id_komoditas = None,
+                kuantitas_produk = kuantitasp,
+                kuantitas_komoditas = None,
+            ).save()
+
+        else :
+            getpenjualan = models.penjualan.objects.get(id_penjualan = id)
+            getpenjualan.delete()
+            messages.error(request, 'Data Penjualan minimal memiliki produk/komoditas dan kuantitas yang sesuai, Coba Ulang Kembali!')
+            return redirect('create_penjualan')
+        messages.success(request, 'Data Penjualan Berhasil Ditambahkan!')
+        return redirect('read_penjualan')
+    
+def update_penjualan(request, id) :
+    pass
+
+def delete_penjualan(request, id) :
+    getpenjualan = models.penjualan.objects.get(id_penjualan = id)
+    getpenjualan.delete()
+    messages.success(request, "Data Penjualan berhasil dihapus!")
+    return redirect('read_penjualan')
+
+
+
+
+
+        
+
