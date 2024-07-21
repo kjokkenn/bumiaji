@@ -20,15 +20,14 @@ import tempfile
 
 # CRUD MITRA
 def read_mitra(request) :
-    try :
-        allmitra = models.mitra.objects.all()
-        return render(request,
-                      'mitra/read_mitra.html',
-                      {
-                          'allmitra' : allmitra
-                      })
-    except models.mitra.DoesNotExist :
-        messages.error(request,"Data Mitra Tidak Ditemukan!")
+    allmitra = models.mitra.objects.all()
+    if not allmitra.exists():
+        messages.error(request, "Data Mitra Tidak Ditemukan!")
+    return render(request,
+                  'mitra/read_mitra.html',
+                  {
+                      'allmitra': allmitra
+                  })
 
 def create_mitra(request) :
     
@@ -112,18 +111,18 @@ def delete_mitra(request,id) :
 
 '''CRUD PENJUALAN'''
 def read_penjualan(request) : 
-    try :
-        penjualanobj = models.penjualan.objects.all()
-        return render(request,
-                        'penjualan/read_penjualan.html',
-                        {
-                            'penjualanobj' : penjualanobj
-                        })
-    except models.mitra.DoesNotExist :
-        messages.error(request,"Data Penjualan Tidak Ditemukan!")
+    penjualanobj = models.penjualan.objects.all()
+    if not penjualanobj.exists():
+        messages.error(request, "Data Penjualan Tidak Ditemukan!")
+    return render(request,
+                  'penjualan/read_penjualan.html',
+                  {
+                      'penjualanobj': penjualanobj
+                  })
 
 def create_penjualan(request) :
     #Data yang harus diambil sebelum masuk ke 'get'/'post'
+    # detailpanenlobj = 
     pasarobj = models.pasar.objects.all()
     produkobj = models.produk.objects.all()
     komoditasobj = models.komoditas.objects.all()
@@ -138,10 +137,18 @@ def create_penjualan(request) :
         #Mengambil data yang ingin di 'post' dari input html
         pasar = request.POST['pasar']
         tanggal = request.POST['tanggal']
-        kuantitasp = request.POST['kuantitasp']
-        kuantitask = request.POST['kuantitask']
-        produk = request.POST['produk']
-        komoditas = request.POST['komoditas']
+        kuantitasp = request.POST.getlist('kuantitasp')
+        kuantitask = request.POST.getlist('kuantitask')
+        produk = request.POST.getlist('produk')
+        komoditas = request.POST.getlist('komoditas')
+
+        print(kuantitasp)
+        print(kuantitask)
+        print(produk)
+        print(komoditas)
+        #request.POST.getlist
+        #for a,b,c,d in zip(a,b,c,d)
+
 
         penjualan = models.penjualan(
             id_pasar = models.pasar.objects.get(id_pasar = pasar),
@@ -151,38 +158,41 @@ def create_penjualan(request) :
 
         id = penjualan.id_penjualan
 
-        if komoditas != '' and produk != '' and kuantitasp != '' and kuantitask != '' :
-            models.detailpenjualan(
-                id_penjualan = models.penjualan.objects.get(id_penjualan = id),
-                id_produk = models.produk.objects.get(id_produk = produk),
-                id_komoditas = models.komoditas.objects.get(id_komoditas = komoditas),
-                kuantitas_produk = kuantitasp,
-                kuantitas_komoditas = kuantitask,
-            ).save()
+        for produk,komoditas,kuantitasp,kuantitask in zip(produk,komoditas,kuantitasp,kuantitask) :
+            if komoditas != '' and produk != '' and kuantitasp != '' and kuantitask != '' :
+                detail = models.detailpenjualan(
+                    id_penjualan = models.penjualan.objects.get(id_penjualan = id),
+                    id_produk = models.produk.objects.get(id_produk = produk),
+                    id_komoditas = models.komoditas.objects.get(id_komoditas = komoditas),
+                    kuantitas_produk = kuantitasp,
+                    kuantitas_komoditas = kuantitask,
+                )
 
-        elif komoditas != '' and produk == '' and kuantitasp == '' and kuantitask != '' :
-            models.detailpenjualan(
-                id_penjualan = models.penjualan.objects.get(id_penjualan = id),
-                id_produk = None,
-                id_komoditas = models.komoditas.objects.get(id_komoditas = komoditas),
-                kuantitas_produk = None,
-                kuantitas_komoditas = kuantitask,
-            ).save()
-        
-        elif komoditas == '' and produk != '' and kuantitasp != '' and kuantitask == '' :
-            models.detailpenjualan(
-                id_penjualan = models.penjualan.objects.get(id_penjualan = id),
-                id_produk = models.produk.objects.get(id_produk = produk),
-                id_komoditas = None,
-                kuantitas_produk = kuantitasp,
-                kuantitas_komoditas = None,
-            ).save()
+            elif komoditas != '' and produk == '' and kuantitasp == '' and kuantitask != '' :
+                detail = models.detailpenjualan(
+                    id_penjualan = models.penjualan.objects.get(id_penjualan = id),
+                    id_produk = None,
+                    id_komoditas = models.komoditas.objects.get(id_komoditas = komoditas),
+                    kuantitas_produk = None,
+                    kuantitas_komoditas = kuantitask,
+                )
+            
+            elif komoditas == '' and produk != '' and kuantitasp != '' and kuantitask == '' :
+                detail = models.detailpenjualan(
+                    id_penjualan = models.penjualan.objects.get(id_penjualan = id),
+                    id_produk = models.produk.objects.get(id_produk = produk),
+                    id_komoditas = None,
+                    kuantitas_produk = kuantitasp,
+                    kuantitas_komoditas = None,
+                )
 
-        else :
-            getpenjualan = models.penjualan.objects.get(id_penjualan = id)
-            getpenjualan.delete()
-            messages.error(request, 'Data Penjualan minimal memiliki produk/komoditas dan kuantitas yang sesuai, Coba Ulang Kembali!')
-            return redirect('create_penjualan')
+            else :
+                getpenjualan = models.penjualan.objects.get(id_penjualan = id)
+                getdetailpenjualan = models
+                getpenjualan.delete()
+                messages.error(request, 'Data Penjualan minimal memiliki produk/komoditas dan kuantitas yang sesuai, Coba Ulang Kembali!')
+                return redirect('create_penjualan')
+        detail.save()
         messages.success(request, 'Data Penjualan Berhasil Ditambahkan!')
         return redirect('read_penjualan')
     
