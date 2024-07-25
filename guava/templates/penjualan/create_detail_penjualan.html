@@ -3,26 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create Penjualan</title>
+    <title>Create Detail Penjualan</title>
 </head>
 <body>
-    <h1>Create Data Penjualan</h1>
+    <h1>Create Data Detail Penjualan</h1>
     <form action="" method="post">
         {% csrf_token %}
-        <h2>Penjualan</h2>
-        <label>Nama Pasar</label>
-        <select name="pasar">
-            {% for i in pasarobj %}
-            <option value="{{i.id_pasar}}">{{i.nama_pasar}}</option>
-            {% endfor %}
-        </select>
-
-        <label>Tanggal</label>
-        <input type="date" name="tanggal" required>
-        
-        <br>
-        <br>
-
         <h2>Detail Penjualan</h2>
         <div id="tambahdetail">
         <div class="row">

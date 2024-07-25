@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Komoditas</title>
+</head>
+<body>
+    <h1>Create Data Komoditas</h1>
+    <form action="" method="post">
+        {% csrf_token %}
+        <label>Nama Komoditas</label>
+        <input type="text" name="nama_komoditas" required>
+        
+        <label>Grade</label>
+        <input type="text" name="nama_grade" required>
+        
+        <label>Harga Beli</label>
+        <input type="number" name="harga_beli" required>
+        
+        <label>Harga Jual</label>
+        <input type="number" name="harga_jual" required>
+
+        <br>
+        <br>    
+
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+        {% endfor %}
+</ul>
+{% endif %}

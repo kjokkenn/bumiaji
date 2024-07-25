@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Read Pasar</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        td div {
+            margin-bottom: 8px;
+        }
+
+        button {
+            margin-right: 4px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Data Pasar</h1>
+    <a href="{% url 'create_pasar' %}"><button>Create Pasar</button></a>
+    <table>
+        <thead>
+            <tr>
+                <th>No</th>
+                <th>ID Pasar</th>
+                <th>Nama Pasar</th>
+                <th>Alamat Pasar</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                {% for i in pasarobj %}
+                <td>{{ forloop.counter }}</td>
+                <td>{{ i.id_pasar }}</td>
+                <td>{{ i.nama_pasar }}</td>
+                <td>{{ i.alamat_pasar }}</td>
+                <td>
+                    <a href="{% url 'update_pasar' i.id_pasar %}"><button>Update Pasar</button></a>
+                    <a href="{% url 'delete_pasar' i.id_pasar %}"><button>Delete Pasar</button></a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+        {% endfor %}
+</ul>
+{% endif %}

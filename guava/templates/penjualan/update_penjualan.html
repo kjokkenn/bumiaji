@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Penjualan</title>
+</head>
+<body>
+    <h1>Change Data Penjualan</h1>
+    <form action="" method="post">
+        {% csrf_token %}
+        <h2>Penjualan</h2>
+        <label>Nama Pasar</label>
+        <select name="pasar">
+            {% for i in pasarobj %}
+            {% if i.nama_pasar == id_pasar %}
+            <option selected value="{{i.id_pasar}}">{{i.nama_pasar}}</option>
+            {% else %}
+            <option value="{{i.id_pasar}}">{{i.nama_pasar}}</option>
+            {% endif %}
+            {% endfor %}
+        </select>
+
+        <label>Tanggal</label>
+        <input type="date" name="tanggal" value="{{tanggalpenjualan}}" required>
+        
+        <br>
+        <br>
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+        {% endfor %}
+</ul>
+{% endif %}

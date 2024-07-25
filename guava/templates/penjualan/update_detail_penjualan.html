@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Detail Penjualan</title>
+</head>
+<body>
+    <h1>Change Data Detail Penjualan</h1>
+    <form action="" method="post">
+        {% csrf_token %}
+        <h2>Detail Penjualan</h2>
+        <label>ID Penjualan</label>
+        <select name="idpenjualan">
+            {% for item in getpenjualan %}
+            {% if item.id_penjualan == id_penjualan %}
+            <option selected value="{{item.id_penjualan}}">{{item.id_penjualan}}</option>
+            {% else %}
+            <option value="{{item.id_penjualan}}">{{item.id_penjualan}}</option>
+            {% endif %}
+            {% endfor %}
+        </select>
+
+        <label>Nama Produk</label>
+        <select name="produk">
+            {% for i in produk %}
+            {% if i.id_produk == id_produk %}
+            <option selected value="{{i.id_produk}}">{{i.nama_produk}}</option>
+            {% else %}
+            <option value="{{i.id_produk}}">{{i.nama_produk}}</option>
+            {% endif %}
+            {% endfor %}
+        </select>
+        
+        <label>Nama Komoditas</label>
+        <select name="komoditas">
+            {% for i in komoditas %}
+            {% if i.id_komoditas == id_komoditas %}
+            <option selected value="{{i.id_komoditas}}">{{i}}</option>
+            {% else %}
+            <option value="{{i.id_komoditas}}">{{i}}</option>
+            {% endif %}
+            {% endfor %}
+        </select>
+
+        <br>
+        <br>
+
+        <label>Kuantitas Produk</label>
+        <input type="number" name="kuantitasp" value="{{kuantitasp}}">
+        
+        <label>Kuantitas Komoditas</label>
+        <input type="number" name="kuantitask" value="{{kuantitask}}">
+        
+        <br>
+        <br>
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+        {% endfor %}
+</ul>
+{% endif %}

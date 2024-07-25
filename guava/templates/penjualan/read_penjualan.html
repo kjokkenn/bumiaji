@@ -4,6 +4,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Data Penjualan</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        td div {
+            margin-bottom: 8px;
+        }
+
+        button {
+            margin-right: 4px;
+        }
+    </style>
 </head>
 <body>
     <h1>Data Penjualan</h1>
@@ -12,32 +36,46 @@
         <thead>
             <tr>
                 <th>No</th>
-                <th>Nama Pasar</th>
-                <th>Tanggal</th> 
+                <th>Pasar</th>
+                <th>Tanggal</th>
+                <th>Detail Penjualan</th>
+                <th>Action Penjualan</th>
             </tr>
         </thead>
-
-        {% for i in penjualanobj %}
         <tbody>
             <tr>
+                {% for i in penjualanobj %}
                 <td>{{ forloop.counter }}</td>
                 <td>{{ i.id_pasar }}</td>
                 <td>{{ i.tanggal }}</td>
                 <td>
-                    <a href="{% url 'update_penjualan' i.id_penjualan %}"><button>Update</button></a>
-                    <a href="{% url 'delete_penjualan' i.id_penjualan %}"><button>Delete</button></a>
+                    {% for item in i.detailpenjualan_set.all %}
+                        <div>
+                            <strong>Nama Produk:</strong> {{ item.id_produk }}<br>
+                            <strong>Nama Komoditas:</strong> {{ item.id_komoditas }}<br>
+                            <strong>Kuantitas Produk:</strong> {{ item.kuantitas_produk }}<br>
+                            <strong>Kuantitas Komoditas:</strong> {{ item.kuantitas_komoditas }}<br>
+                            <a href="{% url 'update_detail_penjualan' item.iddetail_penjualan %}"><button>Update Detail Penjualan</button></a>
+                            <a href="{% url 'delete_detail_penjualan' item.iddetail_penjualan %}"><button>Delete Detail Penjualan</button></a>
+                        {% endfor %}
+                            <a href="{% url 'create_detail_penjualan' i.id_penjualan %}"><button>Create Detail Penjualan</button></a>
+                        </div>
+                </td>
+                <td>
+                    <a href="{% url 'update_penjualan' i.id_penjualan %}"><button>Update Penjualan</button></a>
+                    <a href="{% url 'delete_penjualan' i.id_penjualan %}"><button>Delete Penjualan</button></a>
                 </td>
             </tr>
+            {% endfor %}
         </tbody>
-        {% endfor %}
     </table>
+
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
 </body>
 </html>
-
-{% if messages %}
-<ul class="messages">
-    {% for message in messages %}
-    <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
-        {% endfor %}
-</ul>
-{% endif %}

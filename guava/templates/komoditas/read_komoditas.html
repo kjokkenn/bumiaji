@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Read Komoditas</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        td div {
+            margin-bottom: 8px;
+        }
+
+        button {
+            margin-right: 4px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Data Komoditas</h1>
+    <a href="{% url 'create_komoditas' %}"><button>Create Komoditas</button></a>
+    <table>
+        <thead>
+            <tr>
+                <th>No</th>
+                <th>ID Komoditas</th>
+                <th>Nama Komoditas</th>
+                <th>Grade</th>
+                <th>Harga Beli</th>
+                <th>Harga Jual</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                {% for i in komoditasobj %}
+                <td>{{ forloop.counter }}</td>
+                <td>{{ i.id_komoditas }}</td>
+                <td>{{ i.nama_komoditas }}</td>
+                <td>{{ i.id_grade }}</td>
+                <td>{{ i.harga_beli }}</td>
+                <td>{{ i.harga_jual }}</td>
+                <td>
+                    <a href="{% url 'update_komoditas' i.id_komoditas %}"><button>Update Komoditas</button></a>
+                    <a href="{% url 'delete_komoditas' i.id_komoditas %}"><button>Delete Komoditas</button></a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+        {% endfor %}
+</ul>
+{% endif %}

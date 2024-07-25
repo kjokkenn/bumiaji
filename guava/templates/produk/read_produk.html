@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Read Produk</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        td div {
+            margin-bottom: 8px;
+        }
+
+        button {
+            margin-right: 4px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Data Produk</h1>
+    <a href="{% url 'create_produk' %}"><button>Create Produk</button></a>
+    <table>
+        <thead>
+            <tr>
+                <th>No</th>
+                <th>ID Produk</th>
+                <th>Nama Produk</th>
+                <th>Satuan Produk</th>
+                <th>Harga Produk</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                {% for i in produkobj %}
+                <td>{{ forloop.counter }}</td>
+                <td>{{ i.id_produk }}</td>
+                <td>{{ i.nama_produk }}</td>
+                <td>{{ i.satuan_produk }}</td>
+                <td>{{ i.harga_produk }}</td>
+                <td>
+                    <a href="{% url 'update_produk' i.id_produk %}"><button>Update Produk</button></a>
+                    <a href="{% url 'delete_produk' i.id_produk %}"><button>Delete Produk</button></a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+        {% endfor %}
+</ul>
+{% endif %}

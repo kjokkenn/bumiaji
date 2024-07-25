@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Pasar</title>
+</head>
+<body>
+    <h1>Create Data Pasar</h1>
+    <form action="" method="post">
+        {% csrf_token %}
+        <label>Nama Pasar</label>
+        <input type="text" name="nama_pasar" required>
+        
+        <label>Alamat Pasar</label>
+        <input type="text" name="alamat_pasar" required>
+
+        <br>
+        <br>    
+
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+        {% endfor %}
+</ul>
+{% endif %}
