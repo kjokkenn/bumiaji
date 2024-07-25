@@ -547,17 +547,23 @@ def update_pasar(request, id) :
             'getpasar' : getpasar,
         })
     
+    
     else :
-        nama_pasar = request.POST['nama_pasar']
-        alamat_pasar = request.POST['alamat_pasar']
+        pasarobj = models.pasar.objects.filter(nama_pasar = nama_pasar)
+        if pasarobj.exists() :
+                messages.error(request, 'Nama Pasar sudah ada!')
+        
+        else :
+            nama_pasar = request.POST['nama_pasar']
+            alamat_pasar = request.POST['alamat_pasar']
 
-        getpasar.id_pasar = getpasar.id_pasar
-        getpasar.nama_pasar = nama_pasar
-        getpasar.alamat_pasar = alamat_pasar
+            getpasar.id_pasar = getpasar.id_pasar
+            getpasar.nama_pasar = nama_pasar
+            getpasar.alamat_pasar = alamat_pasar
 
-        getpasar.save()
+            getpasar.save()
 
-        messages.success(request, 'Data Pasar berhasil diperbarui!')
+            messages.success(request, 'Data Pasar berhasil diperbarui!')
         return redirect('read_pasar')
 
 def delete_pasar(request, id) :
