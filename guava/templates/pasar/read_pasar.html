@@ -1,68 +1,51 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Read Pasar</title>
-    <style>
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
+{% extends "base/base.html" %}
 
-        th, td {
-            border: 1px solid black;
-            padding: 8px;
-            text-align: left;
-        }
+{% block content %}
 
-        th {
-            background-color: #f2f2f2;
-        }
-
-        td div {
-            margin-bottom: 8px;
-        }
-
-        button {
-            margin-right: 4px;
-        }
-    </style>
-</head>
-<body>
-    <h1>Data Pasar</h1>
-    <a href="{% url 'create_pasar' %}"><button>Create Pasar</button></a>
-    <table>
-        <thead>
-            <tr>
-                <th>No</th>
-                <th>ID Pasar</th>
-                <th>Nama Pasar</th>
-                <th>Alamat Pasar</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                {% for i in pasarobj %}
-                <td>{{ forloop.counter }}</td>
-                <td>{{ i.id_pasar }}</td>
-                <td>{{ i.nama_pasar }}</td>
-                <td>{{ i.alamat_pasar }}</td>
-                <td>
-                    <a href="{% url 'update_pasar' i.id_pasar %}"><button>Update Pasar</button></a>
-                    <a href="{% url 'delete_pasar' i.id_pasar %}"><button>Delete Pasar</button></a>
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-</body>
-</html>
-{% if messages %}
-<ul class="messages">
-    {% for message in messages %}
-    <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
-        {% endfor %}
-</ul>
-{% endif %}
+<div class="page-header">
+    <h1 class="page-title">Data Pasar</h1>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item "><a href="{% url 'read_pasar' %}">Data Pasar</a></li>
+          <li class="breadcrumb-item active " aria-current="page" ><a class="text-muted" href="{% url 'create_pasar' %}">Create Pasar</a></li>
+        </ol>
+      </nav>
+</div>
+<div class="row">
+    <div class="col-lg-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive">
+                <table class="table table-bordered" id="tabel">
+                    <thead class="table-light">
+                        <tr>
+                            <th class="text-center">No</th>
+                            <th class="text-center">ID Pasar</th>
+                            <th class="text-center">Nama Pasar</th>
+                            <th class="text-center">Alamat Pasar</th>
+                            <th class="text-center">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody class="table-dark">
+                        <tr>
+                            {% for i in pasarobj %}
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ i.id_pasar }}</td>
+                            <td>{{ i.nama_pasar }}</td>
+                            <td>{{ i.alamat_pasar }}</td>
+                            <td class="text-center">
+                                <a href="{% url 'update_pasar' i.id_pasar %}"><button class="btn-inverse-warning btn-icon-text btn-sm mr-2">
+                                    <i class="mdi mdi-reload btn-icon-prepend align-middle"></i>Update Pasar</button></a>
+                                <a href="{% url 'delete_pasar' i.id_pasar %}"><button class="btn-inverse-danger btn-icon-text btn-sm">
+                                    <i class="mdi mdi-close btn-icon-prepend align-middle"></i>Delete Pasar</button></a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

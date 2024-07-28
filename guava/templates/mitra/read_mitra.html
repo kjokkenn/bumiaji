@@ -1,59 +1,75 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h1>Data Mitra</h1>
-    <a href="{% url 'create_mitra' %}"><button>Add Data</button></a>
-    <table>
-        <thead>
-            <tr>
-                <th>No</th>
-                <th>Nama Mitra</th>
-                <th>Alamat</th> 
-                <th>No HP</th>
-                <th>Tanggal Awal Bermitra</th>
-                <th>Durasi Kontrak</th>
-                <th>Luas Lahan</th>
-                <th>Status Mitra</th>
-                <th>Action</th>
-            </tr>
-        </thead>
+{% extends "base/base.html" %}
 
-        {% for item in allmitra %}
-        <tbody >
-            <tr>
-                <td>{{ forloop.counter }}</td>
-                <td>{{ item.nama_mitra }}</td>
-                <td>{{ item.alamat_mitra }}</td>
-                <td>{{ item.nohp_mitra }}</td>
-                <td>{{ item.tanggalawal_mitra }}</td>
-                <td>{{ item.durasi_kontrak }}</td>
-                <td>{{ item.luas_lahan }}</td>
-                <td>
-                    {% if item.status_mitra %}
-                    Aktif
-                    {% else %}
-                    Tidak Aktif
-                    {% endif %}
-                </td>
-                <td>
-                    <a href="{% url 'update_mitra' item.id_mitra %}"><button>Update</button></a>
-                    <a href="{% url 'delete_mitra' item.id_mitra %}"><button>Delete</button></a>
-                </td>
-            </tr>
-        </tbody>
-        {% endfor %}
-    </table>
-</body>
-</html>
-{% if messages %}
-<ul class="messages">
-    {% for message in messages %}
-    <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
-        {% endfor %}
-</ul>
-{% endif %}
+{% block content %}
+
+<div class="page-header">
+    <h1 class="page-title">Data Mitra</h1>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item "><a href="{% url 'readmitra' %}">Data Mitra</a></li>
+          {% if is_owner or is_admin %}
+          <li class="breadcrumb-item active " aria-current="page" ><a class="text-muted" href="{% url 'create_mitra' %}">Create Mitra</a></li>
+          {% endif %}
+        </ol>
+      </nav>
+</div>
+<div class="row">
+        <div class="col-lg-12 grid-margin stretch-card">
+
+            <div class="card">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="datamitra">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>No</th>
+                                    <th>Nama Mitra</th>
+                                    <th>Alamat</th> 
+                                    <th>No HP</th>
+                                    <th>Tanggal Awal Bermitra</th>
+                                    <th>Durasi Kontrak</th>
+                                    <th>Luas Lahan</th>
+                                    <th>Status Mitra</th>
+                                    {% if is_owner or is_admin %}
+                                    <th class="text-center">Action</th>
+                                    {% endif %}
+                                </tr>
+                            </thead>
+                    
+                            <tbody class="table-dark" >
+                                {% for item in allmitra %}
+                                <tr>
+                                    <td>{{ forloop.counter }}</td>
+                                    <td>{{ item.nama_mitra }}</td>
+                                    <td>{{ item.alamat_mitra }}</td>
+                                    <td>{{ item.nohp_mitra }}</td>
+                                    <td>{{ item.tanggalawal_mitra }}</td>
+                                    <td>{{ item.durasi_kontrak }}</td>
+                                    <td>{{ item.luas_lahan }}</td>
+                                    <td>
+                                        {% if item.status_mitra %}
+                                        Aktif
+                                        {% else %}
+                                        Tidak Aktif
+                                        {% endif %}
+                                    </td>
+                                    {% if is_owner or is_admin %}
+                                    <td>           
+                                        <a href="{% url 'update_mitra' item.id_mitra %}"><button class="btn btn-inverse-warning">Update</button></a>
+                                        {% if is_owner %}
+                                        <a href="{% url 'delete_mitra' item.id_mitra %}"><button class="btn btn-inverse-danger">Delete</button></a>
+                                        {% endif %}
+                                    </td>
+                                    {% endif %}
+                                </tr>
+                                    {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+</div>
+    
+{% endblock %}

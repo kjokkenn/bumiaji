@@ -1,0 +1,347 @@
+{% load static %}
+
+<nav class="sidebar sidebar-offcanvas" id="sidebar">
+    <div class="sidebar-brand-wrapper d-none d-lg-flex align-items-center mt-2 justify-content-center fixed-top">
+      <a class="sidebar-brand brand-logo text-success display-1 " style="text-decoration: none;" href="index.html"><h3>CV BUMI AJI</h3></a>
+      <a class="sidebar-brand brand-logo-mini text-success display-1" style="text-decoration: none;" href="index.html"><h3>BA</h3></a>
+    </div>
+    <ul class="nav">
+      
+     
+      <li class="nav-item menu-items">
+        <a class="nav-link" href="{% url 'base' %}">
+          <span class="menu-icon">
+            <i class="mdi mdi-speedometer"></i>
+          </span>
+          <span class="menu-title">Dashboard</span>
+        </a>
+      </li>
+      <li class="nav-item nav-category">
+        <span class="nav-link">Data Master</span>
+      </li>
+      {% if is_owner or is_admin or is_inspeksi %}
+      <li class="nav-item menu-items">
+        <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+          <span class="menu-icon">
+            <i class="mdi mdi-account-multiple-outline"></i>
+          </span>
+          <span class="menu-title">Mitra</span>
+          <i class="menu-arrow"></i>
+        </a>
+        <div class="collapse" id="ui-basic">
+          <ul class="nav flex-column sub-menu">
+  
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'readmitra' %}">
+                    <span>
+                        <i class="mdi mdi-account-outline mr-2"></i>
+                    </span>
+                    <span>Data Mitra</span>
+                </a>
+            </li>
+       
+            {% if is_owner or is_admin %}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'create_mitra' %}">
+                <span>
+                  <i class="mdi mdi-account-multiple-plus mr-2"></i>
+                </span>
+                <span>Tambah Mitra</span>
+              </a>
+            </li>
+            {% endif %}
+          </ul>
+        </div>
+      </li>
+      {% endif %}
+      
+      <li class="nav-item menu-items">
+        <a class="nav-link" data-toggle="collapse" href="#ui-basic2" aria-expanded="false" aria-controls="ui-basic2">
+          <span class="menu-icon">
+            <i class="mdi mdi-leaf"></i>
+          </span>
+          <span class="menu-title">Komoditas</span>
+          <i class="menu-arrow"></i>
+        </a>
+        <div class="collapse" id="ui-basic2">
+          <ul class="nav flex-column sub-menu">
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'read_komoditas' %}">
+                    <span>
+                        <i class= "mdi mdi-format-list-bulleted mr-2"></i>
+                    </span>
+                    <span>Data Komoditas</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                 <a class="nav-link" href="{% url 'create_komoditas' %}">
+                    <span>
+                        <i class="mdi mdi-plus mr-2"></i>
+                    </span>
+                    <span>Tambah Komoditas</span>
+                </a>
+            </li>
+          </ul>
+        </div>
+      </li>
+
+      <li class="nav-item menu-items">
+        <a class="nav-link" data-toggle="collapse" href="#ui-basic3" aria-expanded="false" aria-controls="ui-basic3">
+          <span class="menu-icon">
+            <i class="mdi mdi-food"></i>
+          </span>
+          <span class="menu-title">Produk</span>
+          <i class="menu-arrow"></i>
+        </a>
+        <div class="collapse" id="ui-basic3">
+          <ul class="nav flex-column sub-menu">
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'read_produk' %}">
+                    <span>
+                        <i class="mdi mdi-format-list-bulleted mr-2"></i>
+                    </span>
+                    <span>Data Produk</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                 <a class="nav-link" href="{% url 'create_produk' %}">
+                    <span>
+                        <i class="mdi mdi-plus  mr-2"></i>
+                    </span>
+                    <span>Tambah Produk</span>
+                </a>
+            </li>
+          </ul>
+        </div>
+      </li>
+      {% if is_owner or is_admin %}
+      <li class="nav-item menu-items">
+        <a class="nav-link" data-toggle="collapse" href="#ui-basic4" aria-expanded="false" aria-controls="ui-basic4">
+          <span class="menu-icon">
+            <i class="mdi mdi-cash-multiple"></i>
+          </span>
+          <span class="menu-title">Jenis Biaya</span>
+          <i class="menu-arrow"></i>
+        </a>
+        <div class="collapse" id="ui-basic4">
+          <ul class="nav flex-column sub-menu">
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'read_jenisbiaya' %}">
+                    <span>
+                        <i class="mdi mdi-cards-outline mr-2"></i>
+                    </span>
+                    <span>Data Jenis Biaya </span>
+                </a>
+            </li>
+            {% if is_owner %}
+            <li class="nav-item">
+                 <a class="nav-link" href="{% url 'create_jenisbiaya' %}">
+                    <span>
+                        <i class="mdi mdi-plus mr-2"></i>
+                    </span>
+                    <span>Tambah Jenis Biaya </span>
+                </a>
+            </li>
+            {% endif %}
+          </ul>
+        </div>
+      </li>
+      {% endif %}
+      <li class="nav-item menu-items">
+        <a class="nav-link" data-toggle="collapse" href="#ui-basic5" aria-expanded="false" aria-controls="ui-basic5">
+          <span class="menu-icon">
+            <i class="mdi mdi-store"></i>
+          </span>
+          <span class="menu-title">Pasar</span>
+          <i class="menu-arrow"></i>
+        </a>
+        <div class="collapse" id="ui-basic5">
+          <ul class="nav flex-column sub-menu">
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'read_pasar' %}">
+                    <span>
+                        <i class="mdi mdi-format-list-bulleted mr-2"></i>
+                    </span>
+                    <span>Data Pasar</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                 <a class="nav-link" href="{% url 'create_pasar' %}">
+                    <span>
+                        <i class="mdi mdi-plus  mr-2"></i>
+                    </span>
+                    <span>Tambah Pasar</span>
+                </a>
+            </li>
+          </ul>
+        </div>
+      </li>
+      
+      <li class="nav-item nav-category">
+        <span class="nav-link">Data Transaksi</span>
+      </li>
+      {% if is_owner or is_admin or is_inspeksi %}
+      <li class="nav-item menu-items">
+        <a class="nav-link" data-toggle="collapse" href="#ui-basic6" aria-expanded="false" aria-controls="ui-basic6">
+          <span class="menu-icon">
+            <i class="mdi mdi-seed"></i>
+          </span>
+          <span class="menu-title">Panen</span>
+          <i class="menu-arrow"></i>
+        </a>
+        <div class="collapse" id="ui-basic6">
+          <ul class="nav flex-column sub-menu">
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'read_panenmitra' %}">
+                    <span>
+                        <i class="mdi mdi-account-multiple mr-2"></i>
+                    </span>
+                    <span>Panen Mitra</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                 <a class="nav-link" href="{% url 'read_panenlokal' %}">
+                    <span>
+                        <i class="mdi mdi-human-greeting mr-2"></i>
+                    </span>
+                    <span>Panen Lokal</span>
+                </a>
+            </li>
+          </ul>
+        </div>
+      </li>
+      {% endif %}
+      {% if is_owner or is_admin or is_produksi %}
+      <li class="nav-item menu-items">
+        <a class="nav-link" data-toggle="collapse" href="#ui-basic7" aria-expanded="false" aria-controls="ui-basic7">
+          <span class="menu-icon">
+            <i class="mdi mdi-worker"></i>
+          </span>
+          <span class="menu-title">Produksi</span>
+          <i class="menu-arrow"></i>
+        </a>
+        <div class="collapse" id="ui-basic7">
+          <ul class="nav flex-column sub-menu">
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'read_produksi' %}">
+                    <span>
+                        <i class="mdi mdi-factory mr-2"></i>
+                    </span>
+                    <span>Data Produksi</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                 <a class="nav-link" href="{% url 'create_produksi' %}">
+                    <span>
+                        <i class="mdi mdi-plus mr-2"></i>
+                    </span>
+                    <span>Tambah Produksi</span>
+                </a>
+            </li>
+          </ul>
+        </div>
+      </li>
+      {% endif %}
+      
+      <li class="nav-item menu-items">
+        <a class="nav-link" data-toggle="collapse" href="#ui-basic8" aria-expanded="false" aria-controls="ui-basic8">
+          <span class="menu-icon">
+            <i class="mdi mdi-basket-fill"></i>
+          </span>
+          <span class="menu-title">Penjualan</span>
+          <i class="menu-arrow"></i>
+        </a>
+        <div class="collapse" id="ui-basic8">
+          <ul class="nav flex-column sub-menu">
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'read_penjualan' %}">
+                    <span>
+                        <i class="mdi mdi-shopping mr-2"></i>
+                    </span>
+                    <span>Data Penjualan</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                 <a class="nav-link" href="{% url 'create_penjualan' %}">
+                    <span>
+                        <i class="mdi mdi-cart-plus mr-2"></i>
+                    </span>
+                    <span>Tambah Penjualan</span>
+                </a>
+            </li>
+          </ul>
+        </div>
+      </li>
+
+      {% if is_owner or is_admin %}
+      <li class="nav-item menu-items">
+        <a class="nav-link" data-toggle="collapse" href="#ui-basic9" aria-expanded="false" aria-controls="ui-basic9">
+          <span class="menu-icon">
+            <i class="mdi mdi-cash-multiple"></i>
+          </span>
+          <span class="menu-title">Biaya Lain</span>
+          <i class="menu-arrow"></i>
+        </a>
+        <div class="collapse" id="ui-basic9">
+          <ul class="nav flex-column sub-menu">
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'read_detailbiaya' %}">
+                    <span>
+                        <i class="mdi mdi-cards-outline mr-2"></i>
+                    </span>
+                    <span>Data Biaya Lain</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                 <a class="nav-link" href="{% url 'create_detailbiaya' %}">
+                    <span>
+                        <i class="mdi mdi-plus mr-2"></i>
+                    </span>
+                    <span>Tambah Biaya Lain</span>
+                </a>
+            </li>
+          </ul>
+        </div>
+      </li>
+      {% endif %}
+
+      {% if is_owner %}
+      <li class="nav-item menu-items">
+        <a class="nav-link" data-toggle="collapse" href="#ui-basic10" aria-expanded="false" aria-controls="ui-basic10">
+          <span class="menu-icon">
+            <i class="mdi mdi-file-document"></i>
+          </span>
+          <span class="menu-title">Laporan</span>
+          <i class="menu-arrow"></i>
+        </a>
+        <div class="collapse" id="ui-basic10">
+          <ul class="nav flex-column sub-menu">
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'laporanpanen' %}">
+                    <span>
+                        <i class="mdi mdi-seed mr-2"></i>
+                    </span>
+                    <span>Laporan Panen</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                 <a class="nav-link" href="{% url 'laporan_penjualan' %}">
+                    <span>
+                        <i class="mdi mdi-basket mr-2"></i>
+                    </span>
+                    <span>Laporan Penjualan</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                 <a class="nav-link" href="{% url 'laporan_labarugi' %}">
+                    <span>
+                        <i class="mdi mdi-file-check mr-2"></i>
+                    </span>
+                    <span>Laporan Laba Rugi</span>
+                </a>
+            </li>
+          </ul>
+        </div>
+      </li>
+      {% endif %}
+  </nav>
